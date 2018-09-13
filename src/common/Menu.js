@@ -57,7 +57,13 @@ class Menu extends Component {
             >
               <MenuIcon />
             </IconButton>
-            <Popper open={menuOpen} anchorEl={this.anchorElement} transition disablePortal>
+            <Popper
+              open={menuOpen}
+              anchorEl={this.anchorEl}
+              transition
+              disablePortal
+              style={{ zIndex: '100' }}
+            >
               {({ TransitionProps, placement }) => (
                 <Grow
                   {...TransitionProps}
@@ -74,7 +80,7 @@ class Menu extends Component {
                 </Grow>
               )}
             </Popper>
-            <Link to="/">
+            <Link to="/" style={{ textDecoration: 'none' }}>
               <IconButton aria-label="Home" style={isActive(history, '/')}>
                 <HomeIcon />
               </IconButton>
@@ -82,7 +88,7 @@ class Menu extends Component {
           </div>
           <Hidden xsDown>
             <Typography type="title" color="inherit">
-              TECH TRAINING MARKETPLACE
+              MUI MARKETPLACE
             </Typography>
           </Hidden>
           <Hidden smUp>
@@ -93,7 +99,7 @@ class Menu extends Component {
           <div style={{ position: 'absolute', right: '10px' }}>
             <span style={{ float: 'right' }}>
               <span>
-                <Link to="/signup">
+                <Link to="/signup" style={{ textDecoration: 'none' }}>
                   <Hidden xsDown>
                     <Button style={isActive(history, '/signup')}>Sign up</Button>
                   </Hidden>
@@ -103,7 +109,7 @@ class Menu extends Component {
                     </IconButton>
                   </Hidden>
                 </Link>
-                <Link to="/signin">
+                <Link to="/signin" style={{ textDecoration: 'none' }}>
                   <Hidden xsDown>
                     <Button style={isActive(history, '/signin')}>Sign In</Button>
                   </Hidden>

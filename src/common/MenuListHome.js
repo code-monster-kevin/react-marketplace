@@ -8,9 +8,9 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
 
-const MenuListHome = (props) => (
+const MenuListHome = props => (
   <MenuList>
-    <Link to="/mail">
+    <Link to="/mail" style={{ textDecoration: 'none' }}>
       <MenuItem onClick={props.handleMenuClose}>
         <ListItemIcon>
           <SendIcon />
@@ -18,7 +18,7 @@ const MenuListHome = (props) => (
         <ListItemText inset primary="Sent mail" />
       </MenuItem>
     </Link>
-    <Link to="/drafts">
+    <Link to="/drafts" style={{ textDecoration: 'none' }}>
       <MenuItem onClick={props.handleMenuClose}>
         <ListItemIcon>
           <DraftsIcon />
@@ -26,7 +26,7 @@ const MenuListHome = (props) => (
         <ListItemText inset primary="Drafts" />
       </MenuItem>
     </Link>
-    <Link to="/inbox">
+    <Link to="/inbox" style={{ textDecoration: 'none' }}>
       <MenuItem onClick={props.handleMenuClose}>
         <ListItemIcon>
           <InboxIcon />
