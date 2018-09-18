@@ -13,6 +13,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import SignInIcon from '@material-ui/icons/Input';
 import SignUpIcon from '@material-ui/icons/AssignmentInd';
+import SignOutIcon from '@material-ui/icons/ExitToApp';
 import { Link, withRouter } from 'react-router-dom';
 import MenuListHome from './MenuListHome';
 
@@ -22,9 +23,12 @@ const isActive = (history, path) => {
 };
 
 class Menu extends Component {
-  state = {
-    menuOpen: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      menuOpen: false
+    };
+  }
 
   handleMenuToggle = () => {
     this.setState(state => ({ menuOpen: !state.menuOpen }));
@@ -98,28 +102,57 @@ class Menu extends Component {
           </Hidden>
           <div style={{ position: 'absolute', right: '10px' }}>
             <span style={{ float: 'right' }}>
-              <span>
-                <Link to="/signup" style={{ textDecoration: 'none' }}>
+              {this.props.authenticated ? (
+                <span>
                   <Hidden xsDown>
-                    <Button style={isActive(history, '/signup')}>Sign up</Button>
+                    <Button
+                      style={isActive(history, '/signout')}
+                      onClick={() => this.props.signOut()}
+                    >
+                      Sign out
+                    </Button>
                   </Hidden>
                   <Hidden smUp>
-                    <IconButton aria-label="AssignmentInd" style={isActive(history, '/signup')}>
-                      <SignUpIcon />
+                    <IconButton
+                      aria-label="ExitToApp"
+                      style={isActive(history, '/signout')}
+                      onClick={() => this.props.signOut()}
+                    >
+                      <SignOutIcon />
                     </IconButton>
                   </Hidden>
-                </Link>
-                <Link to="/signin" style={{ textDecoration: 'none' }}>
+                </span>
+              ) : (
+                <span>
+                  <Link to="/signup" style={{ textDecoration: 'none' }}>
+                    <Hidden xsDown>
+                      <Button style={isActive(history, '/signup')}>Sign up</Button>
+                    </Hidden>
+                    <Hidden smUp>
+                      <IconButton aria-label="AssignmentInd" style={isActive(history, '/signup')}>
+                        <SignUpIcon />
+                      </IconButton>
+                    </Hidden>
+                  </Link>
                   <Hidden xsDown>
-                    <Button style={isActive(history, '/signin')}>Sign In</Button>
+                    <Button
+                      style={isActive(history, '/signin')}
+                      onClick={() => this.props.signIn()}
+                    >
+                      Sign In
+                    </Button>
                   </Hidden>
                   <Hidden smUp>
-                    <IconButton aria-label="Input" style={isActive(history, '/signin')}>
+                    <IconButton
+                      aria-label="Input"
+                      style={isActive(history, '/signin')}
+                      onClick={() => this.props.signIn()}
+                    >
                       <SignInIcon />
                     </IconButton>
                   </Hidden>
-                </Link>
-              </span>
+                </span>
+              )}
             </span>
           </div>
         </Toolbar>
