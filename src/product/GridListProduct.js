@@ -10,72 +10,49 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import SearchIcon from '@material-ui/icons/Search';
-
-const tileData = [
-  {
-    img: 'https://material-ui.com/static/images/grid-list/breakfast.jpg',
-    title: 'Breakfast',
-    author: 'jill111'
-  },
-  {
-    img: 'https://material-ui.com/static/images/grid-list/burgers.jpg',
-    title: 'Burgers',
-    author: 'director90'
-  },
-  {
-    img: 'https://material-ui.com/static/images/grid-list/camera.jpg',
-    title: 'Camera',
-    author: 'Danson67'
-  },
-  {
-    img: 'https://material-ui.com/static/images/grid-list/morning.jpg',
-    title: 'Morning',
-    author: 'fancycrave1'
-  },
-  {
-    img: 'https://material-ui.com/static/images/grid-list/hats.jpg',
-    title: 'Hats',
-    author: 'Hans'
-  },
-  {
-    img: 'https://material-ui.com/static/images/grid-list/honey.jpg',
-    title: 'Honey',
-    author: 'fancycravel'
-  },
-  {
-    img: 'https://material-ui.com/static/images/grid-list/vegetables.jpg',
-    title: 'Vegetables',
-    author: 'jill111'
-  },
-  {
-    img: 'https://material-ui.com/static/images/grid-list/plant.jpg',
-    title: 'Water Plant',
-    author: 'Bkrtmad'
-  }
-];
+import ProductData from './ProductData';
 
 class GridListProduct extends Component {
-  state = {
-    loading: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+      products: null
+    };
+  }
+
+  componentDidMount() {
+    this.loadProducts(null);
+  }
+
+  loadProducts(searchtext) {
+    //TODO: replace to load data from api
+    var filteredProducts = [];
+
+    if (searchtext === null) {
+      filteredProducts = ProductData;
+    } else {
+      filteredProducts = ProductData.filter(item => {
+        return item.title.toLowerCase().includes(searchtext.toLowerCase());
+      });
+    }
+    this.setState({ products: filteredProducts });
+  }
 
   handleProductSearch = () => {
     const searchText = document.getElementById('productlist-search').value;
     if (searchText === '') {
+      this.loadProducts(null);
       return;
     }
-
     this.setState({ loading: true });
-    console.log('search text', searchText); //TODO: Add code to load filtered product list
-
-    setTimeout(() => {
-      this.setState({ loading: false });
-    }, 3000); // simulate loading data
-    // this.setState({ loading: false });
+    this.loadProducts(searchText);
+    this.setState({ loading: false });
   };
 
   render() {
-    const { loading } = this.state;
+    const { loading, products } = this.state;
+
     return (
       <GridList style={{ maxWidth: '768px', margin: '10px' }}>
         <GridListTile
@@ -107,20 +84,21 @@ class GridListProduct extends Component {
           </ListSubheader>
           {loading && <LinearProgress />}
         </GridListTile>
-        {tileData.map(tile => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
-            <GridListTileBar
-              title={tile.title}
-              subtitle={<span>by: {tile.author}</span>}
-              actionIcon={
-                <IconButton>
-                  <InfoIcon />
-                </IconButton>
-              }
-            />
-          </GridListTile>
-        ))}
+        {products &&
+          products.map(item => (
+            <GridListTile key={item.img}>
+              <img src={item.img} alt={item.title} />
+              <GridListTileBar
+                title={item.title}
+                subtitle={<span>by: {item.author}</span>}
+                actionIcon={
+                  <IconButton>
+                    <InfoIcon />
+                  </IconButton>
+                }
+              />
+            </GridListTile>
+          ))}
       </GridList>
     );
   }
