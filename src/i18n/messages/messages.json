@@ -1,0 +1,32 @@
+[
+  {
+    "id": "menu.title.sm",
+    "defaultMessage": "MUI Marketplace",
+    "filepath": "src/common/Menu.js"
+  },
+  {
+    "id": "menu.title.xs",
+    "defaultMessage": "MUI",
+    "filepath": "src/common/Menu.js"
+  },
+  {
+    "id": "menu.signout",
+    "defaultMessage": "Sign Out",
+    "filepath": "src/common/Menu.js"
+  },
+  {
+    "id": "menu.signin",
+    "defaultMessage": "Sign In",
+    "filepath": "src/common/Menu.js"
+  },
+  {
+    "id": "menu.signup",
+    "defaultMessage": "Sign Up",
+    "filepath": "src/common/Menu.js"
+  },
+  {
+    "id": "productlist.title",
+    "defaultMessage": "Product List",
+    "filepath": "src/product/GridListProduct.js"
+  }
+]

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl, defineMessages } from 'react-intl';
 import Typography from '@material-ui/core/Typography';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -11,6 +12,13 @@ import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import SearchIcon from '@material-ui/icons/Search';
 import ProductData from './ProductData';
+
+const messages = defineMessages({
+  productListTitle: {
+    id: 'productlist.title',
+    defaultMessage: 'Product List'
+  }
+});
 
 class GridListProduct extends Component {
   constructor(props) {
@@ -51,6 +59,7 @@ class GridListProduct extends Component {
   };
 
   render() {
+    const { intl : { formatMessage } } = this.props;
     const { loading, products } = this.state;
 
     return (
@@ -62,7 +71,7 @@ class GridListProduct extends Component {
         >
           <ListSubheader component="div">
             <Typography type="title" color="inherit">
-              Product List
+              {formatMessage(messages.productListTitle)}
             </Typography>
             <TextField
               id="productlist-search"
@@ -104,4 +113,4 @@ class GridListProduct extends Component {
   }
 }
 
-export default GridListProduct;
+export default injectIntl(GridListProduct);

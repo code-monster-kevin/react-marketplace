@@ -8,6 +8,7 @@
     "keycloak-js": "^4.4.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
+    "react-intl": "^2.6.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5"
   },
@@ -16,9 +17,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "prettier": "prettier --print-width 100 --single-quote --write \"src/**/*.{js,jsx,json,css}\""
+    "prettier": "prettier --print-width 100 --single-quote --write \"src/**/*.{js,jsx,json,css}\"",
+    "extract:messages": "react-intl-cra \"src/**/*.{js,jsx}\" -o \"src/i18n/messages/messages.json\"",
+    "manage:translations": "node ./translationRunner.js"
   },
   "devDependencies": {
-    "prettier": "^1.14.2"
+    "prettier": "^1.14.2",
+    "react-intl-cra": "^0.3.3",
+    "react-intl-translations-manager": "^5.0.3"
   }
 }
