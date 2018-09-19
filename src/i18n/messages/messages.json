@@ -25,6 +25,11 @@
     "filepath": "src/common/Menu.js"
   },
   {
+    "id": "dialog.language.select",
+    "defaultMessage": "Select Language",
+    "filepath": "src/common/Menu.js"
+  },
+  {
     "id": "productlist.title",
     "defaultMessage": "Product List",
     "filepath": "src/product/GridListProduct.js"

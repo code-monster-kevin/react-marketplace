@@ -47,6 +47,10 @@ const messages = defineMessages({
   menuSignUp: {
     id: 'menu.signup',
     defaultMessage: 'Sign Up'
+  },
+  dialogLanguageSelect: {
+    id: 'dialog.language.select',
+    defaultMessage: 'Select Language'
   }
 });
 
@@ -61,7 +65,7 @@ class Menu extends Component {
     this.state = {
       locale: localStorage.getItem('app.locale') || 'en',
       menuOpen: false,
-      localeOpen: false,
+      localeOpen: false
     };
   }
 
@@ -84,15 +88,17 @@ class Menu extends Component {
     this.setState({ localeOpen: false });
   };
 
-  handleLocaleChange = (event) => {
-    console.log(event.target.value);
+  /*   handleLocaleChange = (event) => {
     localStorage.setItem('app.locale', event.target.value);
     this.setState({ locale: event.target.value });
     this.handleLocaleClose();
-  };
+  }; */
 
   render() {
-    const { history, intl : { formatMessage } } = this.props;
+    const {
+      history,
+      intl: { formatMessage }
+    } = this.props;
     const { menuOpen } = this.state;
 
     return (
@@ -153,28 +159,31 @@ class Menu extends Component {
           <div style={{ position: 'absolute', right: '10px' }}>
             <span style={{ float: 'right' }}>
               <IconButton onClick={this.handleLocaleOpen}>
-                {(this.state.locale==='zh') ?
-                  <FlagCNIcon />
-                  :
-                  <FlagUSIcon />
-                }
+                {this.state.locale === 'zh' ? <FlagCNIcon /> : <FlagUSIcon />}
               </IconButton>
               <Dialog
-              disableBackdropClick
-              disableEscapeKeyDown
-              open={this.state.localeOpen}
-              onClose={this.handleLocaleClose}
+                disableBackdropClick
+                disableEscapeKeyDown
+                open={this.state.localeOpen}
+                onClose={this.handleLocaleClose}
               >
-                <DialogTitle>Select Language</DialogTitle>
+                <DialogTitle>{formatMessage(messages.dialogLanguageSelect)}</DialogTitle>
                 <DialogContent>
                   <form>
                     <FormControl>
                       <Select
                         value={this.state.locale}
-                        onChange={this.handleLocaleChange}
+                        onChange={e => {
+                          this.props.handleChangeLocale(e.target.value);
+                          this.handleLocaleClose();
+                        }}
                       >
-                        <MenuItem value='en'><FlagUSIcon />{' '}English</MenuItem>
-                        <MenuItem value='zh'><FlagCNIcon />{' '}中文</MenuItem>
+                        <MenuItem value="en">
+                          <FlagUSIcon /> English
+                        </MenuItem>
+                        <MenuItem value="zh">
+                          <FlagCNIcon /> 中文
+                        </MenuItem>
                       </Select>
                     </FormControl>
                   </form>
@@ -209,7 +218,9 @@ class Menu extends Component {
                 <span>
                   <Link to="/signup" style={{ textDecoration: 'none' }}>
                     <Hidden xsDown>
-                      <Button style={isActive(history, '/signup')}>{formatMessage(messages.menuSignUp)}</Button>
+                      <Button style={isActive(history, '/signup')}>
+                        {formatMessage(messages.menuSignUp)}
+                      </Button>
                     </Hidden>
                     <Hidden smUp>
                       <IconButton aria-label="AssignmentInd" style={isActive(history, '/signup')}>

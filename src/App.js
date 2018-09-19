@@ -35,6 +35,7 @@ class App extends Component {
             authenticated={this.state.authenticated}
             signIn={this.signIn}
             signOut={this.signOut}
+            handleChangeLocale={this.props.handleChangeLocale}
           />
           <Route exact path="/" component={GridListProduct} />
         </div>

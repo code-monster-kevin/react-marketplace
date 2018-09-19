@@ -25,12 +25,17 @@ class AppIntl extends Component {
     return locale;
   };
 
+  handleChangeLocale = value => {
+    localStorage.setItem('app.locale', value);
+    this.setState({ locale: value });
+  };
+
   render() {
     const { locale } = this.state;
     const messages = translations[locale];
     return (
       <IntlProvider locale={locale} key={locale} messages={messages} defaultLocale={defaultLocale}>
-        <App />
+        <App handleChangeLocale={this.handleChangeLocale} />
       </IntlProvider>
     );
   }

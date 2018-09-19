@@ -59,7 +59,9 @@ class GridListProduct extends Component {
   };
 
   render() {
-    const { intl : { formatMessage } } = this.props;
+    const {
+      intl: { formatMessage }
+    } = this.props;
     const { loading, products } = this.state;
 
     return (
