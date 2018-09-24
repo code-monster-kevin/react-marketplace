@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import zhLocaleData from 'react-intl/locale-data/zh';
 import translations from './i18n/locales';
-import App from './App';
+import AppGql from './AppGql';
 
 addLocaleData(zhLocaleData);
 const defaultLocale = 'en';
@@ -35,7 +35,7 @@ class AppIntl extends Component {
     const messages = translations[locale];
     return (
       <IntlProvider locale={locale} key={locale} messages={messages} defaultLocale={defaultLocale}>
-        <App handleChangeLocale={this.handleChangeLocale} />
+        <AppGql handleChangeLocale={this.handleChangeLocale} />
       </IntlProvider>
     );
   }

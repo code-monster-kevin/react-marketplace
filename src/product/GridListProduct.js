@@ -12,6 +12,8 @@ import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import SearchIcon from '@material-ui/icons/Search';
 import ProductData from './ProductData';
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
 
 const messages = defineMessages({
   productListTitle: {
@@ -19,6 +21,42 @@ const messages = defineMessages({
     defaultMessage: 'Product List'
   }
 });
+
+const GET_PRODUCTS = gql`
+{
+  products {
+    img,
+    title,
+    author
+  }
+}
+`;
+
+const ProductList = ({ searchText }) => (
+  <Query query={GET_PRODUCTS}>
+    {({ loading, error, data }) => {
+      if (loading) return <LinearProgress />;
+      if (error) return `Error! ${error.message}`;
+
+      return (
+          data.products.map(item => (
+            <GridListTile key={item.img}>
+              <img src={item.img} alt={item.title} />
+              <GridListTileBar
+                title={item.title}
+                subtitle={<span>by: {item.author}</span>}
+                actionIcon={
+                  <IconButton>
+                    <InfoIcon />
+                  </IconButton>
+                }
+              />
+            </GridListTile>
+          ))
+      );
+    }}
+  </Query>
+);
 
 class GridListProduct extends Component {
   constructor(props) {
@@ -54,15 +92,20 @@ class GridListProduct extends Component {
       return;
     }
     this.setState({ loading: true });
-    this.loadProducts(searchText);
-    this.setState({ loading: false });
+    
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 3000); // simulate loading data
+
+    // this.loadProducts(searchText);
+    // this.setState({ loading: false });
   };
 
   render() {
     const {
       intl: { formatMessage }
     } = this.props;
-    const { loading, products } = this.state;
+    const { loading } = this.state;
 
     return (
       <GridList style={{ maxWidth: '768px', margin: '10px' }}>
@@ -93,23 +136,8 @@ class GridListProduct extends Component {
               }}
             />
           </ListSubheader>
-          {loading && <LinearProgress />}
         </GridListTile>
-        {products &&
-          products.map(item => (
-            <GridListTile key={item.img}>
-              <img src={item.img} alt={item.title} />
-              <GridListTileBar
-                title={item.title}
-                subtitle={<span>by: {item.author}</span>}
-                actionIcon={
-                  <IconButton>
-                    <InfoIcon />
-                  </IconButton>
-                }
-              />
-            </GridListTile>
-          ))}
+        <ProductList />
       </GridList>
     );
   }
